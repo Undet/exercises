@@ -26,6 +26,7 @@ namespace exercises.MappingProfiles
             CreateMap<Student, CreateStudentRequestDTO>();
             CreateMap<Student, UpdateStudentRequestDTO>();
 
+            CreateMap<UpdateStudentRequestDTO, Student>();
             CreateMap<CreateStudentRequestDTO, Student>();
             #endregion
 

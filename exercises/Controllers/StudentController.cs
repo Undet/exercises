@@ -2,10 +2,12 @@
 using exercises.Commands.Students;
 using exercises.Commands.Studentss;
 using exercises.Queries.Students;
+using exercises.Request.Students;
+using exercises.Respounses.Students;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace exercises.Controllers
+namespace exercises.Controllers.StudentController
 {
     [ApiController]
     [Route("[controller]")]
@@ -15,7 +17,7 @@ namespace exercises.Controllers
         private readonly ILogger<StudentController> _logger;
         private readonly IMapper _mapper;
 
-        public StudentController(ILogger<StudentController> logger, IMediator mediator,IMapper mapper)
+        public StudentController(ILogger<StudentController> logger, IMediator mediator, IMapper mapper)
         {
             _mediator = mediator;
             _logger = logger;
@@ -25,55 +27,61 @@ namespace exercises.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _mediator.Send(new GetStudentsQuery());
-
+            var students = await _mediator.Send(new GetStudentsQuery());
+            IEnumerable<GetAllStudentsResponsetDTO> result = _mapper.Map<IEnumerable<GetAllStudentsResponsetDTO>>(students);
             return Ok(result);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById([FromRoute] int id) 
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            var result = await _mediator.Send(new GetStudentByIDQuery { 
-            Id = id
+
+            var student = await _mediator.Send(new GetStudentByIDQuery
+            {
+                Id = id
             });
+
+            var result = _mapper.Map<GetStudentByIdResponseDTO>(student);
 
             return Ok(result);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(Student student)
+        public async Task<IActionResult> Add(CreateStudentRequestDTO student)
         {
-            var newStudent = new Student
-            {
-                Name = student.Name,
-                SecondName = student.SecondName,
-                Password = student.Password
-            };
+            var newStudent = _mapper.Map<Student>(student);
 
-            var result = await _mediator.Send(new CreateStudentCommand { 
-             Student = newStudent
+            await _mediator.Send(new CreateStudentCommand
+            {
+                Student = newStudent
             });
+
+            var result = _mapper.Map<CreateStudentResponseDTO>(newStudent);
 
             return Ok(result);
         }
+
         [HttpDelete]
         public async Task<IActionResult> DeleteById(int id)
-        {
-            var result = await _mediator.Send(new DeleteStudentByIDCommand {
-            Id = id
+        {            
+            var student = await _mediator.Send(new DeleteStudentByIDCommand
+            {
+                Id = id
             });
+
+            var result = _mapper.Map<DeleteStudentResponseDTO>(student);
 
             return Ok(result);
         }
         [HttpPut]
-        public async Task<IActionResult> Update(Student student)
-        {          
-
-            var result = await _mediator.Send(new UpdateStudentCommand
+        public async Task<IActionResult> Update(UpdateStudentRequestDTO studentRequest)
+        {
+            var student = _mapper.Map<Student>(studentRequest);
+            await _mediator.Send(new UpdateStudentCommand
             {
                 Student = student
-            }) ;
-
+            });
+            var result = _mapper.Map<UpdateStudentResponseDTO>(student);
             return Ok(result);
         }
 
