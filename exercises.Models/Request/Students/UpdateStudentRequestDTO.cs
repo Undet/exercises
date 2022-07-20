@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace exercises
+namespace exercises.Request.Students
 {
-    public class Student
+    public class UpdateStudentRequestDTO
     {
         public int Id { get; set; }
-        
+
         [Required]
         public string Name { get; set; }
 

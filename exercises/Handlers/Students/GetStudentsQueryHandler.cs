@@ -1,12 +1,13 @@
 ﻿using exercises.Data;
+using exercises.Queries.Students;
 using MediatR;
 
-namespace exercises.Command_and_Query.Students.Queries
+namespace exercises.Handlers.Students
 {
     public class GetStudentsQueryHandler : IRequestHandler<GetStudentsQuery, IEnumerable<Student>>
     {
         private readonly IStudentDB _studentDB;
-        GetStudentsQueryHandler(IStudentDB studentDB)
+        public GetStudentsQueryHandler(IStudentDB studentDB)
         {
             _studentDB = studentDB;
         }

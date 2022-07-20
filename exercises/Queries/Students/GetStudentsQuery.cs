@@ -1,5 +1,5 @@
 ﻿using MediatR;
-namespace exercises.Command_and_Query.Students.Queries
+namespace exercises.Queries.Students
 {
     public class GetStudentsQuery : IRequest<IEnumerable<Student>>
     {

@@ -1,6 +1,4 @@
-using exercises.Data;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,9 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<AppDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddScoped<IStudentDB, StudentDB>();
-builder.Services.AddAutoMapper(typeof(Startup));
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
@@ -33,5 +29,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-
-

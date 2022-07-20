@@ -1,18 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace exercises
+namespace exercises.Models.Students
 {
-    public class Student
+    public class StudentDTO
     {
         public int Id { get; set; }
-        
+
         [Required]
         public string Name { get; set; }
 
         [Required]
         public string SecondName { get; set; }
-
-        [Required]
-        public string Password { get; set; }
     }
 }

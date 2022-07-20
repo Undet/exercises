@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace exercises.Command_and_Query.StudentCQ.Commands
+namespace exercises.Commands.Studentss
 {
     public class DeleteStudentByIDCommand : IRequest<Student>
     {

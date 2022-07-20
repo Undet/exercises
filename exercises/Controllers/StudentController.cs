@@ -1,7 +1,7 @@
-﻿using exercises.Command_and_Query.StudentCQ.Commands;
-using exercises.Command_and_Query.Students.Commands;
-using exercises.Command_and_Query.Students.Queries;
-using exercises.Data;
+﻿using AutoMapper;
+using exercises.Commands.Students;
+using exercises.Commands.Studentss;
+using exercises.Queries.Students;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,11 +13,13 @@ namespace exercises.Controllers
     {
         private readonly IMediator _mediator;
         private readonly ILogger<StudentController> _logger;
+        private readonly IMapper _mapper;
 
-        public StudentController(ILogger<StudentController> logger, IMediator mediator)
+        public StudentController(ILogger<StudentController> logger, IMediator mediator,IMapper mapper)
         {
             _mediator = mediator;
             _logger = logger;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -39,13 +41,15 @@ namespace exercises.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] Student student)
+        public async Task<IActionResult> Add(Student student)
         {
             var newStudent = new Student
             {
                 Name = student.Name,
-                SecondName = student.SecondName
+                SecondName = student.SecondName,
+                Password = student.Password
             };
+
             var result = await _mediator.Send(new CreateStudentCommand { 
              Student = newStudent
             });
@@ -63,15 +67,11 @@ namespace exercises.Controllers
         }
         [HttpPut]
         public async Task<IActionResult> Update(Student student)
-        {
-            var newStudent = new Student
-            {
-                Name = student.Name,
-                SecondName = student.SecondName
-            };
+        {          
+
             var result = await _mediator.Send(new UpdateStudentCommand
             {
-                Student = newStudent
+                Student = student
             }) ;
 
             return Ok(result);

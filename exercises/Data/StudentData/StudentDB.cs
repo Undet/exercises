@@ -4,7 +4,7 @@
     {
         private readonly AppDBContext _DBContext;
 
-        StudentDB(AppDBContext appDBContext)
+        public StudentDB(AppDBContext appDBContext)
         {
             _DBContext = appDBContext;
         }
@@ -33,7 +33,7 @@
             Student result;
             try
             {
-                result = _DBContext.Students.FirstOrDefault(x => x.Id == id);
+                result = _DBContext.Students.First(x => x.Id == id);
             }
             catch (Exception e)
             {
@@ -72,7 +72,7 @@
 
         public Task<Student> GetById(int id)
         {
-            var result = _DBContext.Students.FirstOrDefault((i) => i.Id == id);
+            var result = _DBContext.Students.First((i) => i.Id == id);
             if (result == null)
             {
                 throw new ArgumentException("Entity must not be null");
@@ -82,17 +82,8 @@
 
         public Task<Student> Update(Student student)
         {
-            Student result;
-            try
-            {
-                result = _DBContext.Students.FirstOrDefault((i) => i.Id == student.Id);
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
 
-            if (result == null)
+            if (student == null)
             {
                 throw new ArgumentException("Entity must not be null");
             }
@@ -108,7 +99,7 @@
                 throw new Exception(e.Message);
             }
 
-            return Task.FromResult(result);
+            return Task.FromResult(student);
         }
     }
 }

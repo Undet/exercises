@@ -1,12 +1,13 @@
-﻿using exercises.Data;
+﻿using exercises.Commands.Studentss;
+using exercises.Data;
 using MediatR;
 
-namespace exercises.Command_and_Query.StudentCQ.Commands
+namespace exercises.Handlers.Students
 {
     public class DeleteStudentByIDCommandHandler : IRequestHandler<DeleteStudentByIDCommand, Student>
     {
         private readonly IStudentDB _studentDB;
-        DeleteStudentByIDCommandHandler(IStudentDB studentDB)
+        public DeleteStudentByIDCommandHandler(IStudentDB studentDB)
         {
             _studentDB = studentDB;
         }
