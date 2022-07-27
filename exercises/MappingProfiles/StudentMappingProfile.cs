@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using exercises.Models.Students;
+using exercises.Model;
+using exercises.Models;
 using exercises.Request.Students;
 using exercises.Respounses.Students;
 
@@ -9,8 +10,18 @@ namespace exercises.MappingProfiles
     {
         public StudentMappingProfile()
         {
+            #region DTO Mapping
             CreateMap<Student, StudentDTO>();
             CreateMap<StudentDTO, Student>();
+
+            CreateMap<EntryPass, EntryPassDTO>();
+            CreateMap<EntryPassDTO, EntryPass>();
+
+
+
+            CreateMap<University, UniversityDTO>();
+            CreateMap<UniversityDTO, University>();
+            #endregion
 
             #region Respounses Mapping
             CreateMap<Student, GetAllStudentsResponsetDTO>();
@@ -18,6 +29,7 @@ namespace exercises.MappingProfiles
             CreateMap<Student, DeleteStudentResponseDTO>();
             CreateMap<Student, CreateStudentResponseDTO>();
             CreateMap<Student, UpdateStudentResponseDTO>();
+
             #endregion
 
             #region Requests Mapping
@@ -28,9 +40,9 @@ namespace exercises.MappingProfiles
 
             CreateMap<UpdateStudentRequestDTO, Student>();
             CreateMap<CreateStudentRequestDTO, Student>();
+
+
             #endregion
-
-
         }
     }
 }

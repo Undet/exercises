@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace exercises
+namespace exercises.Models
 {
-    public class Student
+    public class StudentDTO
     {
-        public int Id { get; set; }
-        
+
         [Required]
         public string Name { get; set; }
 

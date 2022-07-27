@@ -33,7 +33,7 @@
             Student result;
             try
             {
-                result = _DBContext.Students.First(x => x.Id == id);
+                result = _DBContext.Students.FirstOrDefault(x => x.StudentId == id);
             }
             catch (Exception e)
             {
@@ -72,7 +72,7 @@
 
         public Task<Student> GetById(int id)
         {
-            var result = _DBContext.Students.First((i) => i.Id == id);
+            var result = _DBContext.Students.FirstOrDefault((i) => i.StudentId == id);
             if (result == null)
             {
                 throw new ArgumentException("Entity must not be null");

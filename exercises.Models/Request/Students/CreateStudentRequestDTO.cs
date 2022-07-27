@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using exercises.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace exercises.Request.Students
 {
@@ -12,5 +13,7 @@ namespace exercises.Request.Students
         
         [Required]
         public string Password { get; set; }
+
+        //public EntryPassDTO EntryPass { get; set; }
     }
 }

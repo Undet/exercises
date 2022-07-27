@@ -38,7 +38,7 @@ namespace exercises.Controllers.StudentController
 
             var student = await _mediator.Send(new GetStudentByIDQuery
             {
-                Id = id
+                StudentId = id
             });
 
             var result = _mapper.Map<GetStudentByIdResponseDTO>(student);
@@ -66,7 +66,7 @@ namespace exercises.Controllers.StudentController
         {            
             var student = await _mediator.Send(new DeleteStudentByIDCommand
             {
-                Id = id
+                StudentId = id
             });
 
             var result = _mapper.Map<DeleteStudentResponseDTO>(student);

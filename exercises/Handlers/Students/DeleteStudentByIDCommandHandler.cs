@@ -13,7 +13,7 @@ namespace exercises.Handlers.Students
         }
         public Task<Student> Handle(DeleteStudentByIDCommand request, CancellationToken cancellationToken)
         {
-            return _studentDB.DeleteById(request.Id);
+            return _studentDB.DeleteById(request.StudentId);
         }
     }
 }

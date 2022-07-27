@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using exercises.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace exercises.Respounses.Students
 {
@@ -7,5 +8,6 @@ namespace exercises.Respounses.Students
         public string Name { get; set; }
 
         public string SecondName { get; set; }
+        public IEnumerable<CourseDTO> Courses { get; set; }
     }
 }

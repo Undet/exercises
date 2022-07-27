@@ -3,6 +3,6 @@ namespace exercises.Queries.Students
 {
     public class GetStudentByIDQuery : IRequest<Student>
     {
-        public int Id { get; set; }
+        public int StudentId { get; set; }
     }
 }

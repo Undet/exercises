@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using exercises.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace exercises.Data
 {
@@ -6,7 +7,11 @@ namespace exercises.Data
     {
         public AppDBContext(DbContextOptions<AppDBContext> options) : base(options) {
         }
+        public DbSet<EntryPass> EntryPass { get; set; } //One to one
+        public DbSet<University> University { get; set; }    // One to many
         public DbSet<Student> Students { get; set; }
+        public DbSet<Course> Course { get; set; }//Many to many
+
 
     }
        

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using exercises.Data;
 
@@ -11,9 +12,11 @@ using exercises.Data;
 namespace exercises.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    partial class StudentDBContextModelSnapshot : ModelSnapshot
+    [Migration("20220727132259_NewPropertiesAndClasses")]
+    partial class NewPropertiesAndClasses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,12 +30,12 @@ namespace exercises.Migrations
                     b.Property<int>("CoursesCourseId")
                         .HasColumnType("int");
 
-                    b.Property<int>("StudentsStudentId")
+                    b.Property<int>("StudentsId")
                         .HasColumnType("int");
 
-                    b.HasKey("CoursesCourseId", "StudentsStudentId");
+                    b.HasKey("CoursesCourseId", "StudentsId");
 
-                    b.HasIndex("StudentsStudentId");
+                    b.HasIndex("StudentsId");
 
                     b.ToTable("CourseStudent");
                 });
@@ -60,11 +63,11 @@ namespace exercises.Migrations
 
             modelBuilder.Entity("exercises.Models.EntryPass", b =>
                 {
-                    b.Property<int>("EntryPassId")
+                    b.Property<int>("DocId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EntryPassId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DocId"), 1L, 1);
 
                     b.Property<DateTime>("DateOfExpiry")
                         .HasColumnType("datetime2");
@@ -72,7 +75,7 @@ namespace exercises.Migrations
                     b.Property<DateTime>("DateOfIssue")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("EntryPassId");
+                    b.HasKey("DocId");
 
                     b.ToTable("EntryPass");
                 });
@@ -104,13 +107,13 @@ namespace exercises.Migrations
 
             modelBuilder.Entity("exercises.Student", b =>
                 {
-                    b.Property<int>("StudentId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("EntryPassId")
+                    b.Property<int>("EntryPassDocId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -128,9 +131,9 @@ namespace exercises.Migrations
                     b.Property<int?>("UniversityId")
                         .HasColumnType("int");
 
-                    b.HasKey("StudentId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("EntryPassId");
+                    b.HasIndex("EntryPassDocId");
 
                     b.HasIndex("UniversityId");
 
@@ -147,7 +150,7 @@ namespace exercises.Migrations
 
                     b.HasOne("exercises.Student", null)
                         .WithMany()
-                        .HasForeignKey("StudentsStudentId")
+                        .HasForeignKey("StudentsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -156,7 +159,7 @@ namespace exercises.Migrations
                 {
                     b.HasOne("exercises.Models.EntryPass", "EntryPass")
                         .WithMany()
-                        .HasForeignKey("EntryPassId")
+                        .HasForeignKey("EntryPassDocId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

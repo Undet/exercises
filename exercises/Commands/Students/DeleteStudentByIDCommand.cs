@@ -4,6 +4,6 @@ namespace exercises.Commands.Studentss
 {
     public class DeleteStudentByIDCommand : IRequest<Student>
     {
-        public int Id { get; set; }
+        public int StudentId { get; set; }
     }
 }

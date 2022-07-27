@@ -13,7 +13,7 @@ namespace exercises.Handlers.Students
         }
         public Task<Student> Handle(GetStudentByIDQuery request, CancellationToken cancellationToken)
         {
-            return _studentDB.GetById(request.Id);
+            return _studentDB.GetById(request.StudentId);
         }
     }
 }

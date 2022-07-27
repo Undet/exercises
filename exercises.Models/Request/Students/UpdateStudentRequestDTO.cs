@@ -4,7 +4,7 @@ namespace exercises.Request.Students
 {
     public class UpdateStudentRequestDTO
     {
-        public int Id { get; set; }
+        public int StudentId { get; set; }
 
         [Required]
         public string Name { get; set; }
