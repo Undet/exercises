@@ -1,4 +1,6 @@
-﻿namespace exercises.Data
+﻿using exercises.Data.Models;
+
+namespace exercises.Data
 {
     public class StudentDB : IStudentDB
     {

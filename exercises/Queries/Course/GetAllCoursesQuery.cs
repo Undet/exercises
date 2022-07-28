@@ -2,7 +2,7 @@
 
 namespace exercises.Queries.Course
 {
-    public class GetAllCoursesQuery : IRequest<IEnumerable<exercises.Model.Course>>
+    public class GetAllCoursesQuery : IRequest<IEnumerable<Data.Models.Course>>
     {
     }
 }

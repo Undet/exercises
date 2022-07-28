@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using exercises.Commands.Courses;
-using exercises.Model;
+using exercises.Data.Models;
 using exercises.Models.Request.Course;
 using exercises.Models.Responses.Course;
 using exercises.Queries.Course;

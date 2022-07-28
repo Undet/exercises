@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using exercises.Data.Models;
+using MediatR;
 
 namespace exercises.Commands.Studentss
 {

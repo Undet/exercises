@@ -1,7 +1,6 @@
-﻿using exercises.Model;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace exercises
+namespace exercises.Data.Models
 {
     public class Student
     {
@@ -22,8 +21,8 @@ namespace exercises
 
         public Student()
         {
-            this.EntryPass = new EntryPass();
-            this.Courses = new List<Course>();
+            EntryPass = new EntryPass();
+            Courses = new List<Course>();
         }
 
     }

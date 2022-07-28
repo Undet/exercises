@@ -1,4 +1,4 @@
-﻿using exercises.Model;
+﻿using exercises.Data.Models;
 using exercises.Models;
 
 namespace exercises.Data.CourseData

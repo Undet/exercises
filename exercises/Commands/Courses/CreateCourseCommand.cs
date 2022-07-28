@@ -1,4 +1,4 @@
-﻿using exercises.Model;
+﻿using exercises.Data.Models;
 using MediatR;
 
 namespace exercises.Commands.Courses

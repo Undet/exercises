@@ -1,5 +1,7 @@
 using exercises.Data;
 using exercises.Data.CourseData;
+using exercises.Services.Implementations;
+using exercises.Services.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
@@ -17,6 +19,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IStudentDB, StudentDB>();
 builder.Services.AddScoped<ICourseDB, CourseDB>();
+builder.Services.AddSingleton<IWeekendCalendarService, WeekendCalendarService>();
 builder.Services.AddAutoMapper(typeof(Startup));
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 

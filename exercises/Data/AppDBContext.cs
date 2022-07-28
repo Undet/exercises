@@ -1,4 +1,4 @@
-﻿using exercises.Model;
+﻿using exercises.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace exercises.Data
@@ -10,8 +10,7 @@ namespace exercises.Data
         public DbSet<EntryPass> EntryPass { get; set; } //One to one
         public DbSet<University> University { get; set; }    // One to many
         public DbSet<Student> Students { get; set; }
-        public DbSet<Course> Course { get; set; }//Many to many
-
+        public DbSet<Course> Course { get; set; }   //Many to many
 
     }
        

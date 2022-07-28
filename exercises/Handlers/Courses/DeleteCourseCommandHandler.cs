@@ -4,7 +4,7 @@ using MediatR;
 
 namespace exercises.Handlers.Course
 {
-    public class DeleteCourseCommandHandler : IRequestHandler<DeleteCourseCommand, exercises.Model.Course>
+    public class DeleteCourseCommandHandler : IRequestHandler<DeleteCourseCommand, Data.Models.Course>
     {
         private readonly ICourseDB _CourseDB;
         public DeleteCourseCommandHandler(ICourseDB courseDB)
@@ -12,7 +12,7 @@ namespace exercises.Handlers.Course
             _CourseDB = courseDB;
         }
 
-        public Task<exercises.Model.Course> Handle(DeleteCourseCommand request, CancellationToken cancellationToken)
+        public Task<Data.Models.Course> Handle(DeleteCourseCommand request, CancellationToken cancellationToken)
         {
             return _CourseDB.DeleteById(request.Course.CourseId);
         }

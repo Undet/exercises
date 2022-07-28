@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using exercises.Model;
+using exercises.Data.Models;
 using exercises.Models;
 using exercises.Models.Request.Course;
 using exercises.Models.Responses.Course;

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace exercises
+namespace exercises.Data.Models
 {
     public class EntryPass
     {
@@ -9,7 +9,7 @@ namespace exercises
         [Required]
         public DateTime DateOfIssue { get; set; }
         [Required]
-        public DateTime DateOfExpiry { get; set; } 
+        public DateTime DateOfExpiry { get; set; }
 
         public EntryPass()
         {

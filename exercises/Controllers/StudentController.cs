@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using exercises.Commands.Students;
 using exercises.Commands.Studentss;
+using exercises.Data.Models;
 using exercises.Queries.Students;
 using exercises.Request.Students;
 using exercises.Respounses.Students;

@@ -1,4 +1,5 @@
 ﻿using exercises.Data;
+using exercises.Data.Models;
 using exercises.Queries.Students;
 using MediatR;
 

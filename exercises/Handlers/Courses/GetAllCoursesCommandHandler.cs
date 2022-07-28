@@ -4,7 +4,7 @@ using MediatR;
 
 namespace exercises.Handlers.Courses
 {
-    public class GetAllCoursesCommandHandler : IRequestHandler<GetAllCoursesQuery, IEnumerable<exercises.Model.Course>>
+    public class GetAllCoursesCommandHandler : IRequestHandler<GetAllCoursesQuery, IEnumerable<Data.Models.Course>>
     {
         private readonly ICourseDB _CourseDB;
         public GetAllCoursesCommandHandler(ICourseDB courseDB)
@@ -12,7 +12,7 @@ namespace exercises.Handlers.Courses
             _CourseDB = courseDB;
         }
 
-        public Task<IEnumerable<exercises.Model.Course>> Handle(GetAllCoursesQuery request, CancellationToken cancellationToken)
+        public Task<IEnumerable<Data.Models.Course>> Handle(GetAllCoursesQuery request, CancellationToken cancellationToken)
         {
             return _CourseDB.GetAll();
         }

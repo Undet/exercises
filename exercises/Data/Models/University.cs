@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace exercises
+namespace exercises.Data.Models
 {
     public class University
     {
