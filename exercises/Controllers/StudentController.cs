@@ -6,10 +6,12 @@ using exercises.Queries.Students;
 using exercises.Request.Students;
 using exercises.Respounses.Students;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace exercises.Controllers.StudentController
 {
+    
     [ApiController]
     [Route("[controller]")]
     public class StudentController : Controller
@@ -25,9 +27,11 @@ namespace exercises.Controllers.StudentController
             _mapper = mapper;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
+            
             var students = await _mediator.Send(new GetStudentsQuery());
             IEnumerable<GetAllStudentsResponsetDTO> result = _mapper.Map<IEnumerable<GetAllStudentsResponsetDTO>>(students);
             return Ok(result);
