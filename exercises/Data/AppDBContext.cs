@@ -11,6 +11,7 @@ namespace exercises.Data
         public DbSet<University> University { get; set; }    // One to many
         public DbSet<Student> Students { get; set; }
         public DbSet<Course> Course { get; set; }   //Many to many
+        public DbSet<Role> Roles { get; set; }
 
     }
        

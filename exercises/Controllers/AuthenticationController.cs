@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using exercises.Commands;
 using exercises.Data.Models;
+using exercises.Queries.Students;
 using exercises.Services.Implementations;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -19,23 +20,46 @@ namespace exercises.Controllers
         {
             _mediator = mediator;
             _logger = logger;
-            _mapper = mapper;
+            _mapper = mapper; 
         }
 
         [HttpPost]
-        public IActionResult Authenticate(StudentCredentials studentCredentials)
+        public async Task<IActionResult> AuthenticateAsync(StudentCredentials studentCredentials)
         {
+
+            Student student = await _mediator.Send(new GetStudentByIDQuery
+            {
+                StudentId = studentCredentials.StudentId
+            });
+
             try
             {
-
-                var token = _mediator.Send(new AuthenticateStudentCommand { Credentials = studentCredentials });
-                return Ok(token.Result);
-                
+                ValidateCredentials(studentCredentials, student);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return Unauthorized();
             }
+
+            var token = _mediator.Send(new AuthenticateStudentCommand { Student = student });
+            return Ok(token.Result);
+
+        }
+        private  void ValidateCredentials(StudentCredentials studentCredentials , Student student)
+        {
+            bool isValid = student != null && AreValidCredentials(studentCredentials, student);
+
+            if (!isValid)
+            {
+                throw new Exception();
+            }
+
+        }
+
+        private static bool AreValidCredentials(StudentCredentials studentCredentials, Student student)
+        {
+            return student.StudentId == studentCredentials.StudentId &&
+                   student.Password == studentCredentials.Password;
         }
     }
 }

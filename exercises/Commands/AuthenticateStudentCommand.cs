@@ -5,6 +5,6 @@ namespace exercises.Commands
 {
     public class AuthenticateStudentCommand : IRequest<String>
     {
-        public StudentCredentials Credentials { get; set; }
+        public Student Student { get; set; }
     }
 }

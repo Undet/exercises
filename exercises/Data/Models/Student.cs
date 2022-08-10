@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Security.Claims;
 
 namespace exercises.Data.Models
 {
@@ -16,14 +18,12 @@ namespace exercises.Data.Models
         [Required]
         public string Password { get; set; }
 
-        public EntryPass EntryPass { get; set; }
-        public IEnumerable<Course> Courses { get; set; }
+        public EntryPass EntryPass { get; set; } = new EntryPass();
+        public IEnumerable<Course> Courses { get; set; } = new List<Course>();
+        public List<Role> Roles { get; set; } = new List<Role>();
 
-        public Student()
-        {
-            EntryPass = new EntryPass();
-            Courses = new List<Course>();
-        }
+
+
 
     }
 }

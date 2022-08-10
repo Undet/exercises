@@ -1,5 +1,6 @@
 using exercises.Data;
 using exercises.Data.CourseData;
+using exercises.Data.RoleD;
 using exercises.Services.Implementations;
 using exercises.Services.Interfaces;
 using MediatR;
@@ -26,6 +27,8 @@ builder.Services.AddDbContext<AppDBContext>(options => options.UseSqlServer(buil
 
 builder.Services.AddScoped<IStudentDB, StudentDB>();
 builder.Services.AddScoped<ICourseDB, CourseDB>();
+builder.Services.AddScoped<IRoleDB, RoleDB>();
+
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
 builder.Services.AddSingleton<IWeekendCalendarService, WeekendCalendarService>();
@@ -80,6 +83,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 #endregion
 
 var app = builder.Build();
+
+
 
 app.Map("/asd", () => {
     return builder.Configuration.GetSection("SecretKey").Key;

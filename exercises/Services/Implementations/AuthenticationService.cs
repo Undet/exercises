@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 
 namespace exercises.Services.Implementations
@@ -23,63 +24,43 @@ namespace exercises.Services.Implementations
             _mapper = mapper;
             _config = config;
         }
-        public Task<string> Authenticate(StudentCredentials studentCredentials)
+        public Task<string> Authenticate(Student student)
         {
-            ValidateCredentials(studentCredentials);
-            string securityToken = GetToken();
-            
-            return Task.FromResult(securityToken);
-        }
+            var roles = student.Roles;
+            var claims = new List<Claim>();
 
-        private async void ValidateCredentials(StudentCredentials studentCredentials)
-        {
-            Student student = await _mediator.Send(new GetStudentByIDQuery
+            if (roles != null)
             {
-                StudentId = studentCredentials.StudentId
-            });
-
-            bool isValid = student != null && AreValidCredentials(studentCredentials, student);
-
-            if (!isValid)
-            {
-                throw new Exception("Student is not valid");
+                foreach (var role in roles)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, role.RoleName));
+                }
             }
-        }
-
-        private static bool AreValidCredentials(StudentCredentials studentCredentials, Student student)
-        {
-            return student.StudentId == studentCredentials.StudentId &&
-                   student.Password == studentCredentials.Password;
-        }
-
-        private string GetToken()
-        {
-            SecurityTokenDescriptor tokenDescriptor = GetTokenDescriptor();
-            var tokenHandler = new JwtSecurityTokenHandler();
-            SecurityToken securityToken = tokenHandler.CreateToken(tokenDescriptor);
-            string token = tokenHandler.WriteToken(securityToken);
-
-            return token;
-        }
-
-        public SecurityTokenDescriptor GetTokenDescriptor()
-        {
-            const int expiringDays = 7;
             
+            string securityToken = GetToken(claims);            
+            return Task.FromResult(securityToken);
+        }               
+
+        private string GetToken(IEnumerable<Claim> claims)
+        {
+            const int expiringHours = 5;
+
             string secreetKey = _config.GetSection("SecretKey").Value;
             byte[] securityKey = Encoding.UTF8.GetBytes(secreetKey);
 
             var symmetricSecurityKey = new SymmetricSecurityKey(securityKey);
 
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Expires = DateTime.UtcNow.AddDays(expiringDays),
-                SigningCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256Signature)
-            };
+            var cred = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256Signature);
 
-            return tokenDescriptor;
+            var securityToken = new JwtSecurityToken(
+                claims: claims,
+                expires: DateTime.UtcNow.AddHours(expiringHours),
+                signingCredentials: cred);
+
+            string token = new JwtSecurityTokenHandler().WriteToken(securityToken);
+
+            return token;
         }
 
-        
     }
 }

@@ -11,9 +11,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace exercises.Controllers.StudentController
 {
-    
+
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class StudentController : Controller
     {
         private readonly IMediator _mediator;
@@ -27,20 +28,18 @@ namespace exercises.Controllers.StudentController
             _mapper = mapper;
         }
 
-        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            
+
             var students = await _mediator.Send(new GetStudentsQuery());
             IEnumerable<GetAllStudentsResponsetDTO> result = _mapper.Map<IEnumerable<GetAllStudentsResponsetDTO>>(students);
-            return Ok(result);
+            return Ok(students);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
-
             var student = await _mediator.Send(new GetStudentByIDQuery
             {
                 StudentId = id
@@ -50,7 +49,7 @@ namespace exercises.Controllers.StudentController
 
             return Ok(result);
         }
-
+        [Authorize(Roles = "Староста, Админ")]
         [HttpPost]
         public async Task<IActionResult> Add(CreateStudentRequestDTO student)
         {
@@ -66,9 +65,10 @@ namespace exercises.Controllers.StudentController
             return Ok(result);
         }
 
+        [Authorize(Roles = "Админ")]
         [HttpDelete]
         public async Task<IActionResult> DeleteById(int id)
-        {            
+        {
             var student = await _mediator.Send(new DeleteStudentByIDCommand
             {
                 StudentId = id
@@ -78,6 +78,7 @@ namespace exercises.Controllers.StudentController
 
             return Ok(result);
         }
+        [Authorize(Roles = "Староста, Админ")]
         [HttpPut]
         public async Task<IActionResult> Update(UpdateStudentRequestDTO studentRequest)
         {

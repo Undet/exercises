@@ -16,7 +16,7 @@ namespace exercises.Handlers.Authentication
 
         public Task<string> Handle(AuthenticateStudentCommand request, CancellationToken cancellationToken)
         {
-            return  _authenticationService.Authenticate(request.Credentials);
+            return  _authenticationService.Authenticate(request.Student);
         }
     }
 
