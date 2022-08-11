@@ -13,18 +13,16 @@ namespace exercises.Data.RoleD
 
         public Task<string> Add(string roleName, int studentid)
         {
-            var student = new Student { Name = "asd", SecondName = "asd", Password = "rrr" }; //_DBContext.Students.FirstOrDefault(x => x.StudentId == studentid);
+            var student = _DBContext.Students.FirstOrDefault(x => x.StudentId == studentid);
             if (roleName == null && student == null)
             {
                 throw new ArgumentNullException("Entity must not be null");
             }
 
-           
-                var role = new Role { RoleName = roleName, Student = student };
-                _DBContext.Roles.Add(role);
-                _DBContext.SaveChanges();
-                return Task.FromResult(roleName);
-            
+            var role = new Role { RoleName = roleName, Student = student };
+            _DBContext.Roles.Add(role);
+            _DBContext.SaveChanges();
+            return Task.FromResult(roleName);
         }
 
         public Task<Role> DeleteById(int id)

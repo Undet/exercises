@@ -5,12 +5,14 @@ using exercises.Models.Request.Course;
 using exercises.Models.Responses.Course;
 using exercises.Queries.Course;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace exercises.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize(Roles = "Админ")]
     public class CourseController : Controller
     {
 
@@ -38,11 +40,6 @@ namespace exercises.Controllers
         {
             var newCourse = _mapper.Map<Course>(course);
 
-            //if student id exists
-            //return ok
-            //else
-            //return forbiden
-            //get students by id 
             await _mediator.Send(new CreateCourseCommand
             {
                 Course = newCourse

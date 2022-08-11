@@ -91,5 +91,23 @@ namespace exercises.Controllers.StudentController
             return Ok(result);
         }
 
+        [HttpPut]
+        [Authorize(Roles = "Админ")]
+        [Route("SetRole")]
+        public async Task<IActionResult> SetRole(GetStudentByIdRequestDTO studentRequest, string role)
+        {
+            var student = await _mediator.Send(new GetStudentByIDQuery
+            {
+                StudentId = studentRequest.StudentId
+            });
+
+            var result = await _mediator.Send(new SetRoleCommand
+            {
+                Student = student,
+                Role = role,
+            });
+
+            return Ok(result);
+        }
     }
 }

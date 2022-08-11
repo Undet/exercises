@@ -25,9 +25,6 @@ namespace exercises.Controllers
             _calendarService = calendarService;
         }
 
-
-
-        //async Task<IActionResult>
         [HttpGet]
         [Route("Year")]
         public async Task<IActionResult> GetYear(DateTime dateTime)

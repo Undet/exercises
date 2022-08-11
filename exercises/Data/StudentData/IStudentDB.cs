@@ -9,6 +9,7 @@ namespace exercises.Data
         Task<Student> Add(Student student);
         Task<Student> Update(Student student);
         Task<Student> DeleteById(int id);
+        Task<string> SetRole(Student student, string role);
 
     }
 }
