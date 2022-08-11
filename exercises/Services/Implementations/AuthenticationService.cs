@@ -29,6 +29,8 @@ namespace exercises.Services.Implementations
             var roles = student.Roles;
             var claims = new List<Claim>();
 
+            claims.Add(new Claim(ClaimTypes.Role, student.Role));
+
             if (roles != null)
             {
                 foreach (var role in roles)

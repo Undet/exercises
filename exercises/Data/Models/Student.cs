@@ -19,11 +19,8 @@ namespace exercises.Data.Models
         public string Password { get; set; }
 
         public EntryPass EntryPass { get; set; } = new EntryPass();
-        public IEnumerable<Course> Courses { get; set; } = new List<Course>();
-        public List<Role> Roles { get; set; } = new List<Role>();
-
-
-
-
+        public  IEnumerable<Course> Courses { get; set; } = new List<Course>();
+        public virtual List<Role> Roles { get; set; } = new List<Role>();
+        public string Role { get; set; } = String.Empty;
     }
 }

@@ -34,7 +34,7 @@ namespace exercises.Controllers.StudentController
 
             var students = await _mediator.Send(new GetStudentsQuery());
             IEnumerable<GetAllStudentsResponsetDTO> result = _mapper.Map<IEnumerable<GetAllStudentsResponsetDTO>>(students);
-            return Ok(students);
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
@@ -65,7 +65,7 @@ namespace exercises.Controllers.StudentController
             return Ok(result);
         }
 
-        [Authorize(Roles = "Админ")]
+        [Authorize(Roles = "Староста, Админ")]
         [HttpDelete]
         public async Task<IActionResult> DeleteById(int id)
         {

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using exercises.Data;
 
@@ -11,9 +12,11 @@ using exercises.Data;
 namespace exercises.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    partial class StudentDBContextModelSnapshot : ModelSnapshot
+    [Migration("20220811155326_OneRole")]
+    partial class OneRole
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
