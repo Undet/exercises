@@ -2,7 +2,6 @@ using exercises;
 using exercises.Data;
 using exercises.Data.CourseData;
 using exercises.Data.Models;
-using exercises.Data.RoleD;
 using exercises.Services.Implementations;
 using exercises.Services.Interfaces;
 using MediatR;
@@ -30,7 +29,6 @@ builder.Services.AddDbContext<AppDBContext>(options => options.UseSqlServer(buil
 
 builder.Services.AddScoped<IStudentDB, StudentDB>();
 builder.Services.AddScoped<ICourseDB, CourseDB>();
-builder.Services.AddScoped<IRoleDB, RoleDB>();
 
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 

@@ -82,12 +82,6 @@ namespace exercises.Data
             return Task.FromResult(result);
         }
 
-        public Task<string> SetRole(Student student, string role)
-        {
-            student.Role = role;
-            _DBContext.SaveChanges();
-            return Task.FromResult($"Студент {student.Name +" "+ student.SecondName} теперь {role}");
-        }
 
         public Task<Student> Update(Student student)
         {

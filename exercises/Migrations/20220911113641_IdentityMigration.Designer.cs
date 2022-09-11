@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using exercises.Data;
 
@@ -11,9 +12,11 @@ using exercises.Data;
 namespace exercises.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    partial class StudentDBContextModelSnapshot : ModelSnapshot
+    [Migration("20220911113641_IdentityMigration")]
+    partial class IdentityMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +37,7 @@ namespace exercises.Migrations
 
                     b.HasIndex("StudentsId");
 
-                    b.ToTable("CourseStudent", (string)null);
+                    b.ToTable("CourseStudent");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -188,7 +191,7 @@ namespace exercises.Migrations
 
                     b.HasKey("CourseId");
 
-                    b.ToTable("Course", (string)null);
+                    b.ToTable("Course");
                 });
 
             modelBuilder.Entity("exercises.Data.Models.EntryPass", b =>
@@ -207,7 +210,7 @@ namespace exercises.Migrations
 
                     b.HasKey("EntryPassId");
 
-                    b.ToTable("EntryPass", (string)null);
+                    b.ToTable("EntryPass");
                 });
 
             modelBuilder.Entity("exercises.Data.Models.Student", b =>
@@ -318,7 +321,7 @@ namespace exercises.Migrations
 
                     b.HasKey("UniversityId");
 
-                    b.ToTable("University", (string)null);
+                    b.ToTable("University");
                 });
 
             modelBuilder.Entity("CourseStudent", b =>

@@ -6,13 +6,13 @@ namespace exercises.Data
 {
     public class AppDBContext : IdentityDbContext<Student>
     {
-        public AppDBContext(DbContextOptions<AppDBContext> options) : base(options) {
+        public AppDBContext(DbContextOptions options) : base(options) 
+        {
         }
-        public DbSet<EntryPass> EntryPass { get; set; } //One to one
-        public DbSet<University> University { get; set; }    // One to many
+        public DbSet<EntryPass> EntryPass { get; set; }
+        public DbSet<University> University { get; set; }  
         public DbSet<Student> Students { get; set; }
-        public DbSet<Course> Course { get; set; }   //Many to many
-        public DbSet<Role> Roles { get; set; }
+        public DbSet<Course> Course { get; set; }
 
     }
        
