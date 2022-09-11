@@ -1,9 +1,10 @@
 ﻿using exercises.Data.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace exercises.Data
 {
-    public class AppDBContext : DbContext
+    public class AppDBContext : IdentityDbContext<Student>
     {
         public AppDBContext(DbContextOptions<AppDBContext> options) : base(options) {
         }

@@ -24,42 +24,9 @@ namespace exercises.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AuthenticateAsync(StudentCredentials studentCredentials)
+        public async Task<IActionResult> AuthenticateAsync()
         {
-
-            Student student = await _mediator.Send(new GetStudentByIDQuery
-            {
-                StudentId = studentCredentials.StudentId
-            });
-
-            try
-            {
-                ValidateCredentials(studentCredentials, student);
-            }
-            catch (Exception)
-            {
-                return Unauthorized();
-            }
-
-            var token = _mediator.Send(new AuthenticateStudentCommand { Student = student });
-            return Ok(token.Result);
-
-        }
-        private  void ValidateCredentials(StudentCredentials studentCredentials , Student student)
-        {
-            bool isValid = student != null && AreValidCredentials(studentCredentials, student);
-
-            if (!isValid)
-            {
-                throw new Exception();
-            }
-
-        }
-
-        private static bool AreValidCredentials(StudentCredentials studentCredentials, Student student)
-        {
-            return student.StudentId == studentCredentials.StudentId &&
-                   student.Password == studentCredentials.Password;
+            return Ok();
         }
     }
 }

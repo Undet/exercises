@@ -1,10 +1,13 @@
+using exercises;
 using exercises.Data;
 using exercises.Data.CourseData;
+using exercises.Data.Models;
 using exercises.Data.RoleD;
 using exercises.Services.Implementations;
 using exercises.Services.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -32,7 +35,7 @@ builder.Services.AddScoped<IRoleDB, RoleDB>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
 builder.Services.AddSingleton<IWeekendCalendarService, WeekendCalendarService>();
-builder.Services.AddAutoMapper(typeof(Startup));
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
 builder.Services.AddAuthorization();
@@ -75,10 +78,22 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = false,
             ValidateIssuer = false,
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("SecretKey").Value)),
             ValidateLifetime = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("SecretKey").Value)),
+            
         };
     });
+
+builder.Services.AddIdentity<Student, IdentityRole>(o =>
+{
+    o.Password.RequireDigit = false;
+    o.Password.RequireLowercase = false;
+    o.Password.RequireUppercase = false;
+    o.Password.RequiredLength = 8;
+    o.User.RequireUniqueEmail = true;
+})
+.AddEntityFrameworkStores<AppDBContext>()
+.AddDefaultTokenProviders();
 
 #endregion
 

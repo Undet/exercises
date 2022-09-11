@@ -20,6 +20,7 @@ namespace exercises.Controllers
         {
             _mediator = mediator;
             _logger = logger;
+            
         }
 
         [HttpGet]
