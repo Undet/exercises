@@ -12,6 +12,12 @@ namespace exercises.Models
         public string SecondName { get; set; }
 
         [Required]
-        public string Password { get; set; }
+        public string UserName { get; set; }
+
+        [Required]
+        public string Email { get; set; }
+
+        public IEnumerable<CourseDTO> Courses { get; set; }
+
     }
 }

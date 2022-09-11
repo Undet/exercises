@@ -12,7 +12,5 @@ namespace exercises.Request.Students
         [Required]
         public string SecondName { get; set; }
 
-        [Required]
-        public string Password { get; set; }
     }
 }

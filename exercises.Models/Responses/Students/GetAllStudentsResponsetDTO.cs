@@ -10,8 +10,6 @@ namespace exercises.Respounses.Students
 
         public string SecondName { get; set; }
 
-        public string Role { get; set; }
-
         public IEnumerable<CourseDTO> Courses { get; set; }
     }
 }

@@ -1,18 +1,22 @@
 ﻿using exercises.Data.Models;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace exercises.Data
 {
     public class StudentDB : IStudentDB
     {
         private readonly AppDBContext _DBContext;
+        private readonly UserManager<Student> _userManager;
 
-        public StudentDB(AppDBContext appDBContext)
+        public StudentDB(AppDBContext appDBContext, UserManager<Student> userManager)
         {
             _DBContext = appDBContext;
+            _userManager = userManager;
         }
 
         public Task<Student> Add(Student student)
-        {
+        {            
             if (student == null)
             {
                 throw new ArgumentNullException("Entity must not be null");

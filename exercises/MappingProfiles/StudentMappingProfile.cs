@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using exercises.Data.Models;
+using exercises.DTO.Models;
 using exercises.Models;
 using exercises.Request.Students;
 using exercises.Respounses.Students;
@@ -14,9 +15,11 @@ namespace exercises.MappingProfiles
             CreateMap<Student, StudentDTO>();
             CreateMap<StudentDTO, Student>();
 
+            CreateMap<UserLoginDTO, Student>();
+            CreateMap<UserRegistrationDto, Student>();
+
             CreateMap<EntryPass, EntryPassDTO>();
             CreateMap<EntryPassDTO, EntryPass>();
-
 
 
             CreateMap<University, UniversityDTO>();

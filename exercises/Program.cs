@@ -29,7 +29,6 @@ builder.Services.AddDbContext<AppDBContext>(options => options.UseSqlServer(buil
 
 builder.Services.AddScoped<IStudentDB, StudentDB>();
 builder.Services.AddScoped<ICourseDB, CourseDB>();
-
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
 builder.Services.AddSingleton<IWeekendCalendarService, WeekendCalendarService>();

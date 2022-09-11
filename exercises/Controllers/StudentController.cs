@@ -2,9 +2,9 @@
 using exercises.Commands.Students;
 using exercises.Commands.Studentss;
 using exercises.Data.Models;
+using exercises.Models;
 using exercises.Queries.Students;
 using exercises.Request.Students;
-using exercises.Respounses.Students;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +14,7 @@ namespace exercises.Controllers.StudentController
 
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class StudentController : Controller
     {
         private readonly IMediator _mediator;
@@ -32,7 +33,7 @@ namespace exercises.Controllers.StudentController
         {
 
             var students = await _mediator.Send(new GetStudentsQuery());
-            IEnumerable<GetAllStudentsResponsetDTO> result = _mapper.Map<IEnumerable<GetAllStudentsResponsetDTO>>(students);
+            var result = _mapper.Map<IEnumerable<StudentDTO>>(students);
             return Ok(result);
         }
 
@@ -44,7 +45,7 @@ namespace exercises.Controllers.StudentController
                 StudentId = id
             });
 
-            var result = _mapper.Map<GetStudentByIdResponseDTO>(student);
+            var result = _mapper.Map<StudentDTO>(student);
 
             return Ok(result);
         }
@@ -59,7 +60,7 @@ namespace exercises.Controllers.StudentController
                 Student = newStudent
             });
 
-            var result = _mapper.Map<CreateStudentResponseDTO>(newStudent);
+            var result = _mapper.Map<StudentDTO>(newStudent);
 
             return Ok(result);
         }
@@ -72,8 +73,7 @@ namespace exercises.Controllers.StudentController
             {
                 StudentId = id
             });
-
-            var result = _mapper.Map<DeleteStudentResponseDTO>(student);
+            var result = _mapper.Map<StudentDTO>(student);
 
             return Ok(result);
         }
@@ -86,26 +86,7 @@ namespace exercises.Controllers.StudentController
             {
                 Student = student
             });
-            var result = _mapper.Map<UpdateStudentResponseDTO>(student);
-            return Ok(result);
-        }
-
-        [HttpPut]
-
-        [Route("SetRole")]
-        public async Task<IActionResult> SetRole(GetStudentByIdRequestDTO studentRequest, string role)
-        {
-            var student = await _mediator.Send(new GetStudentByIDQuery
-            {
-                StudentId = studentRequest.StudentId
-            });
-
-            var result = await _mediator.Send(new SetRoleCommand
-            {
-                Student = student,
-                Role = role,
-            });
-
+            var result = _mapper.Map<StudentDTO>(student);
             return Ok(result);
         }
     }

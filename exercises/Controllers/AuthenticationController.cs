@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
-using exercises.Commands;
-using exercises.Data.Models;
-using exercises.Queries.Students;
-using exercises.Services.Implementations;
+using exercises.DTO.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using exercises.Commands.Auth;
 
 namespace exercises.Controllers
 {
@@ -23,10 +21,27 @@ namespace exercises.Controllers
             _mapper = mapper; 
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AuthenticateAsync()
+        [HttpPost("register")]
+        public async Task<IActionResult> RegisterUser([FromBody] UserRegistrationDto userRegistration)
         {
-            return Ok();
+
+            var userResult = await _mediator.Send(new RegisterUserCommand { RegistrationDTO = userRegistration });
+            return !userResult.Succeeded ? new BadRequestObjectResult(userResult) : StatusCode(201);
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Authenticate([FromBody] UserLoginDTO user)
+        {
+            var isUserValid = await _mediator.Send(new ValidateUserCommand { UserLogin = user });
+
+            if (!isUserValid)
+            { 
+            return Unauthorized("User is not valid");
+            }
+
+            var token = await _mediator.Send(new CreateTokenCommand { });
+
+            return Ok(token);
         }
     }
 }

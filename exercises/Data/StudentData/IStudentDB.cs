@@ -1,4 +1,6 @@
 ﻿using exercises.Data.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Identity;
 
 namespace exercises.Data
 {
