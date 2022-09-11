@@ -14,7 +14,6 @@ namespace exercises.Controllers.StudentController
 
     [ApiController]
     [Route("[controller]")]
-    [Authorize]
     public class StudentController : Controller
     {
         private readonly IMediator _mediator;
@@ -49,7 +48,7 @@ namespace exercises.Controllers.StudentController
 
             return Ok(result);
         }
-        [Authorize(Roles = "Староста, Админ")]
+
         [HttpPost]
         public async Task<IActionResult> Add(CreateStudentRequestDTO student)
         {
@@ -65,7 +64,7 @@ namespace exercises.Controllers.StudentController
             return Ok(result);
         }
 
-        [Authorize(Roles = "Староста, Админ")]
+
         [HttpDelete]
         public async Task<IActionResult> DeleteById(int id)
         {
@@ -78,7 +77,7 @@ namespace exercises.Controllers.StudentController
 
             return Ok(result);
         }
-        [Authorize(Roles = "Староста, Админ")]
+
         [HttpPut]
         public async Task<IActionResult> Update(UpdateStudentRequestDTO studentRequest)
         {
@@ -92,7 +91,7 @@ namespace exercises.Controllers.StudentController
         }
 
         [HttpPut]
-        [Authorize(Roles = "Админ")]
+
         [Route("SetRole")]
         public async Task<IActionResult> SetRole(GetStudentByIdRequestDTO studentRequest, string role)
         {

@@ -7,7 +7,7 @@ namespace exercises.Data.Models
 {
     public class Student : IdentityUser
     {
-        //[Key]
+        [Key]
         public int StudentId { get; set; }
 
         [Required]
