@@ -67,6 +67,7 @@ namespace exercises.Services.Implementations
             };
 
             var roles = await _userManager.GetRolesAsync(_student);
+            roles.Add("admin");
             foreach (var role in roles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));
