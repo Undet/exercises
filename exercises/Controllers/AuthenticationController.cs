@@ -3,6 +3,8 @@ using exercises.DTO.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using exercises.Commands.Auth;
+using exercises.Data.Models;
+using exercises.Commands.Students;
 
 namespace exercises.Controllers
 {
@@ -24,7 +26,6 @@ namespace exercises.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> RegisterUser([FromBody] UserRegistrationDto userRegistration)
         {
-
             var userResult = await _mediator.Send(new RegisterUserCommand { RegistrationDTO = userRegistration });
             return !userResult.Succeeded ? new BadRequestObjectResult(userResult) : StatusCode(201);
         }

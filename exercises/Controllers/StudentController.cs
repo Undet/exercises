@@ -6,6 +6,7 @@ using exercises.Models;
 using exercises.Queries.Students;
 using exercises.Request.Students;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,7 +15,7 @@ namespace exercises.Controllers.StudentController
 
     [ApiController]
     [Route("[controller]")]
-    [Authorize]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class StudentController : Controller
     {
         private readonly IMediator _mediator;

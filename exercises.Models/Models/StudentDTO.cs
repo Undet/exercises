@@ -4,6 +4,7 @@ namespace exercises.Models
 {
     public class StudentDTO
     {
+        public int StudentId { get; set; }
 
         [Required]
         public string Name { get; set; }

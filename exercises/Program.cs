@@ -1,4 +1,3 @@
-using exercises;
 using exercises.Data;
 using exercises.Data.CourseData;
 using exercises.Data.Models;
@@ -10,10 +9,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
-using System.Security.Claims;
 using System.Text;
+using exercises.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,82 +23,27 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 
-builder.Services.AddDbContext<AppDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddScoped<IStudentDB, StudentDB>();
-builder.Services.AddScoped<ICourseDB, CourseDB>();
-builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+//my services
+builder.Services.RegisterDependencies();
 
-builder.Services.AddSingleton<IWeekendCalendarService, WeekendCalendarService>();
-builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
-builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+builder.Services.ConfigureDataBaseContext(builder.Configuration);
+builder.Services.ConfigureMapping();
+builder.Services.ConfigureMediatr();
+builder.Services.ConfigureSwagger();
+builder.Services.ConfigureJWT(builder.Configuration);
+builder.Services.ConfigureIdentity();
+//
+
+//builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+//builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
 builder.Services.AddAuthorization();
 
-builder.Services.AddSwaggerGen(options =>
-{
-    options.AddSecurityDefinition(name: "Bearer", securityScheme: new OpenApiSecurityScheme
-    {
-        Name = "Authorization",
-        Description = "Enter the Bearer Authorization string as following: `Bearer Generated-JWT-Token`",
-        In = ParameterLocation.Header,
-        Type = SecuritySchemeType.ApiKey,
-        Scheme = "Bearer"
-    });
-
-    options.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Name = "Bearer",
-                In = ParameterLocation.Header,
-                Reference = new OpenApiReference
-                {
-                    Id = "Bearer",
-                    Type = ReferenceType.SecurityScheme
-                }
-            },
-            new List<string>()
-        }
-    });
-});
-
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.SaveToken = true;
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateAudience = false,
-            ValidateIssuer = false,
-            ValidateIssuerSigningKey = true,
-            ValidateLifetime = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("SecretKey").Value)),
-            
-        };
-    });
-
-builder.Services.AddIdentity<Student, IdentityRole>(o =>
-{
-    o.Password.RequireDigit = false;
-    o.Password.RequireLowercase = false;
-    o.Password.RequireUppercase = false;
-    o.Password.RequiredLength = 8;
-    o.User.RequireUniqueEmail = true;
-})
-.AddEntityFrameworkStores<AppDBContext>()
-.AddDefaultTokenProviders();
 
 #endregion
 
 var app = builder.Build();
-
-
-
-app.Map("/asd", () => {
-    return builder.Configuration.GetSection("SecretKey").Key;
-});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
